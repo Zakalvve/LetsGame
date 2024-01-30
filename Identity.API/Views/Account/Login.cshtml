@@ -1,0 +1,54 @@
+﻿@model LoginViewModel
+
+<div class="container h-100 d-flex justify-content-center align-items-center">
+
+    @if (Model.EnableLocalLogin)
+    {
+        <div class="card w-50 h-75 pt-3">
+            <form asp-route="Login" class="needs-validation flex-grow-1">
+                <input type="hidden" asp-for="ReturnUrl" />
+                <div class="card-body h-100 d-flex flex-column justify-content-start">
+
+                    <div>
+                        <h3 class="card-title mb-1">Login</h3>
+                        <span class="d-inline-flex gap-4">
+                            <p class="text-muted inline">
+                                Don't have an account yet? 
+                                <a class="btn-link-primary" asp-action="register" asp-controller="account">Sign Up</a>
+                            </p>
+                        </span>
+                    </div>
+
+                    <div>
+                        <div class="form-group">
+                            <label asp-for="Username"></label>
+                            <input class="form-control" placeholder="Username" asp-for="Username" autofocus required>
+                            <span asp-validation-for="Username" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Password"></label>
+                            <input type="password" class="form-control" placeholder="Password" asp-for="Password" autocomplete="off" required>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        @if (Model.AllowRememberLogin)
+                        {
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input class="form-check-input" asp-for="RememberLogin">
+                                    <label class="form-check-label" asp-for="RememberLogin">
+                                        Remember me
+                                    </label>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="card-text">The default users are alice/bob, password: Pass123$</div>
+                        <button class="btn btn-primary" name="button" value="login">Login</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    }
+</div>

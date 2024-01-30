@@ -1,0 +1,16 @@
+﻿@rendermode InteractiveWebAssembly
+
+<button class=@ClassName @onclick="Test">@Text</button>
+
+@code {
+    [Parameter]
+    public string Text { get; set; } = "Click";
+
+    [Parameter]
+    public string ClassName { get; set; } = "";
+
+    private void Test()
+    {
+        Text = "GTFO";
+    }
+}

@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34407.89
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApp", "BlazorApp\BlazorApp\BlazorApp.csproj", "{2BF9F5AC-9DFE-4FBA-9964-AFD296CBCFA1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApp.Client", "BlazorApp\BlazorApp.Client\BlazorApp.Client.csproj", "{00033F8F-6195-4744-9F86-3CEFD8FCF973}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.API", "Core.API\Core.API.csproj", "{2FAB8352-6430-4D6D-8CBC-130AD5A24C4A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LetsGame.AppHost", "LetsGame.AppHost\LetsGame.AppHost.csproj", "{E31F9684-7F72-4F62-8325-44F9D274A59A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LetsGame.ServiceDefaults", "LetsGame.ServiceDefaults\LetsGame.ServiceDefaults.csproj", "{3FCBFF4D-6996-49A6-8668-D18DCAC5AB94}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.API", "Identity.API\Identity.API.csproj", "{A211C4E5-4D95-431D-8C3B-64BA424C5BDA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2BF9F5AC-9DFE-4FBA-9964-AFD296CBCFA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BF9F5AC-9DFE-4FBA-9964-AFD296CBCFA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BF9F5AC-9DFE-4FBA-9964-AFD296CBCFA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BF9F5AC-9DFE-4FBA-9964-AFD296CBCFA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00033F8F-6195-4744-9F86-3CEFD8FCF973}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00033F8F-6195-4744-9F86-3CEFD8FCF973}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00033F8F-6195-4744-9F86-3CEFD8FCF973}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00033F8F-6195-4744-9F86-3CEFD8FCF973}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FAB8352-6430-4D6D-8CBC-130AD5A24C4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FAB8352-6430-4D6D-8CBC-130AD5A24C4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FAB8352-6430-4D6D-8CBC-130AD5A24C4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FAB8352-6430-4D6D-8CBC-130AD5A24C4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E31F9684-7F72-4F62-8325-44F9D274A59A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E31F9684-7F72-4F62-8325-44F9D274A59A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E31F9684-7F72-4F62-8325-44F9D274A59A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E31F9684-7F72-4F62-8325-44F9D274A59A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FCBFF4D-6996-49A6-8668-D18DCAC5AB94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FCBFF4D-6996-49A6-8668-D18DCAC5AB94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FCBFF4D-6996-49A6-8668-D18DCAC5AB94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FCBFF4D-6996-49A6-8668-D18DCAC5AB94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A211C4E5-4D95-431D-8C3B-64BA424C5BDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A211C4E5-4D95-431D-8C3B-64BA424C5BDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A211C4E5-4D95-431D-8C3B-64BA424C5BDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A211C4E5-4D95-431D-8C3B-64BA424C5BDA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {891FD7AD-FEE2-44CF-8DF9-3BAEA88C0C97}
+	EndGlobalSection
+EndGlobal

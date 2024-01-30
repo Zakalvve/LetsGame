@@ -1,0 +1,140 @@
+﻿@page "/Account/login"
+
+@* @inject NavigationManager nav
+@inject UserManager<ApplicationUser> userManager
+@inject SignInManager<ApplicationUser> signInManager *@
+@inject IIdentityServerInteractionService interaction
+@* @inject IClientStore clientStore
+@inject IAuthenticationSchemeProvider schemeProvider
+@inject IAuthenticationHandlerProvider handlerProvider
+@inject IEventService events
+@inject IRedirectService redirector *@
+
+@rendermode InteractiveServer
+
+    <EditForm FormName="login-form" Model="@model" OnValidSubmit="UserLogin">
+        <InputText Placeholder="Enter your username"
+                        @bind-Value=model.Username/>
+        <InputText Placeholder="Enter your password"
+                        @bind-Value=model.Password/>
+
+        <p class="mt-4">Use the development login. Username: bob, Password: Pass123$</p>
+
+        <button type="submit">Login</button>
+    </EditForm>
+
+
+@code {
+
+    [SupplyParameterFromQuery]
+    private string? returnUrl { get; set; }
+
+
+    [SupplyParameterFromForm]
+    private LoginInputModel model { get; set; } = new();
+
+    bool initialized = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // if (initialized) return;
+
+        var vm = await BuildLoginViewModelAsync(returnUrl);
+
+        // initialized = true;
+
+        // // if (vm.IsExternalLoginOnly)
+        // // {
+        // //     //redirect
+        // // }
+    }
+
+    private async Task UserLogin()
+    {
+        // check if we are in the context of an authorization request
+        // var context = await interaction.GetAuthorizationContextAsync(returnUrl);
+
+        // var result = await signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberLogin, lockoutOnFailure: true);
+
+        // if (result.Succeeded)
+        // {
+        //     var user = await userManager.FindByNameAsync(model.Username);
+        //     await events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName, clientId: context?.Client.ClientId));
+
+        //     if (String.IsNullOrEmpty(returnUrl))
+        //     {
+        //         nav.NavigateTo("~/");
+        //     }
+
+        //     nav.NavigateTo(redirector.ExtractRedirectUriFromReturnUrl(returnUrl!));
+        // }
+
+        // await events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials", clientId: context?.Client.ClientId));
+    }
+
+    // private async Task<LoginViewModel> BuildLoginViewModelAsync(LoginInputModel model, string returnUrl)
+    // {
+    //     var vm = await BuildLoginViewModelAsync(returnUrl);
+    //     vm.Username = model.Username;
+    //     vm.RememberLogin = model.RememberLogin;
+
+    //     return vm;
+    // }
+
+    private async Task<LoginViewModel> BuildLoginViewModelAsync(string returnUrl)
+    {
+        var context = await interaction.GetAuthorizationContextAsync(returnUrl);
+
+        return new LoginViewModel();
+
+        // if (context?.IdP != null && await schemeProvider.GetSchemeAsync(context.IdP) != null)
+        // {
+        //     var local = context.IdP == IdentityServerConstants.LocalIdentityProvider;
+
+        //     var vm = new LoginViewModel
+        //     {
+        //         EnableLocalLogin = local,
+        //         Username = context?.LoginHint
+        //     };
+
+        //     if (!local)
+        //     {
+        //         vm.ExternalProviders = new[] { new ExternalProvider { AuthenticationScheme = context.IdP } };
+        //     }
+
+        //     return vm;
+        // }
+
+        // var schemes = await schemeProvider.GetAllSchemesAsync();
+
+        // var providers = schemes
+        // .Where(scheme => scheme.DisplayName != null)
+        // .Select(scheme => new ExternalProvider
+        // {
+        //     DisplayName = scheme.DisplayName ?? scheme.Name,
+        //     AuthenticationScheme = scheme.Name
+        // }).ToList();
+
+        // var allowLocal = true;
+        // if (context?.Client.ClientId != null)
+        // {
+        //     var client = await clientStore.FindEnabledClientByIdAsync(context.Client.ClientId);
+        //     if (client != null)
+        //     {
+        //         allowLocal = client.EnableLocalLogin;
+        //         if (client.IdentityProviderRestrictions != null && client.IdentityProviderRestrictions.Any())
+        //         {
+        //             providers = providers.Where(provider => client.IdentityProviderRestrictions.Contains(provider.AuthenticationScheme)).ToList();
+        //         }
+        //     }
+        // }
+
+        // return new LoginViewModel
+        // {
+        //     AllowRememberLogin = AccountOptions.AllowRememberLogin,
+        //     EnableLocalLogin = allowLocal && AccountOptions.AllowLocalLogin,
+        //     Username = context?.LoginHint,
+        //     ExternalProviders = providers.ToArray()
+        // };
+    }
+}
