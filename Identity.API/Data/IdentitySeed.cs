@@ -16,13 +16,12 @@ public class IdentitySeed(ILogger<IdentitySeed> logger, UserManager<ApplicationU
             {
                 alice = new ApplicationUser
                 {
-                    LastModified = DateTime.Now,
+                    Id = Guid.NewGuid().ToString(),
+                    FirstName = "Alice",
+                    LastName = "Smith",
                     UserName = "alice",
                     Email = "AliceSmith@email.com",
                     EmailConfirmed = true,
-                    Id = Guid.NewGuid().ToString(),
-                    LastName = "Smith",
-                    FirstName = "Alice",
                     PhoneNumber = "1234567890",
                 };
 
@@ -52,13 +51,12 @@ public class IdentitySeed(ILogger<IdentitySeed> logger, UserManager<ApplicationU
             {
                 bob = new ApplicationUser
                 {
-                    LastModified = DateTime.Now,
+                    Id = Guid.NewGuid().ToString(),
+                    FirstName = "Bob",
+                    LastName = "Smith",
                     UserName = "bob",
                     Email = "BobSmith@email.com",
-                    EmailConfirmed = true,
-                    Id = Guid.NewGuid().ToString(),
-                    LastName = "Smith",
-                    FirstName = "Bob",
+                    EmailConfirmed = true,                    
                     PhoneNumber = "1234567890",
                 };
 
@@ -90,22 +88,18 @@ public class IdentitySeed(ILogger<IdentitySeed> logger, UserManager<ApplicationU
             {
                 new ProfilePicture()
                 {
-                    LastModified = DateTime.Now,
                     imagePath = "default-profile-pictures/default-profile-pictures-1.jpg"
                 },
                 new ProfilePicture()
                 {
-                    LastModified = DateTime.Now,
                     imagePath = "default-profile-pictures/default-profile-pictures-2.jpg"
                 },
                 new ProfilePicture()
                 {
-                    LastModified = DateTime.Now,
                     imagePath = "default-profile-pictures/default-profile-pictures-3.jpg"
                 },
                 new ProfilePicture()
                 {
-                    LastModified = DateTime.Now,
                     imagePath = "default-profile-pictures/default-profile-pictures-4.jpg"
                 }
             };
