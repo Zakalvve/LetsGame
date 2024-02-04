@@ -1,6 +1,7 @@
 using Core.API.Extensions;
 using Core.API.Data;
 using LetsGame.ServiceDefaults;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,7 +25,7 @@ if (app.Environment.IsDevelopment())
     using (var scope = app.Services.CreateScope())
     {
         var context = scope.ServiceProvider.GetRequiredService<LetsGameContext>();
-        context.Database.EnsureCreated();
+        await context.Database.EnsureCreatedAsync();
     }
 
     app.UseSwagger();

@@ -1,4 +1,5 @@
 using Aspire.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
 var builder = DistributedApplication.CreateBuilder(args);
@@ -16,7 +17,7 @@ if (builder.Environment.IsDevelopment() && String.IsNullOrEmpty(sqlPassword))
 }
 
 // Components
-var sqlserver = builder.AddSqlServerContainer("sqlServer", sqlPassword, 6969)
+var sqlserver = builder.AddSqlServerContainer("sql-server", sqlPassword, 6969)
     .WithVolumeMount("VolumeMount.sqlServer.data", "/var/opt/mssql", VolumeMountType.Named);
 
 // Databases

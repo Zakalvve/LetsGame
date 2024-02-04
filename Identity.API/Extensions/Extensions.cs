@@ -2,7 +2,8 @@
 using Duende.IdentityServer.Services;
 using Identity.API.Configuration;
 using Identity.API.Data;
-using Identity.API.Models;
+using Identity.API.Models.Data;
+using Identity.API.Models.View;
 using Identity.API.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +18,7 @@ namespace Identity.API.Extensions
             builder.AddSqlServerDbContext<ApplicationContext>("IdentityDb");
 
             // Seed the database with default values
-            //builder.Services.AddMigration<ApplicationContext, UsersSeed>();
+            builder.Services.AddMigration<ApplicationContext, IdentitySeed>();
 
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationContext>()
@@ -43,6 +44,9 @@ namespace Identity.API.Extensions
             builder.Services.AddTransient<IProfileService, ProfileService>();
             builder.Services.AddTransient<ILoginService<ApplicationUser>, EFLoginService>();
             builder.Services.AddTransient<IRedirectService, RedirectService>();
+
+            builder.Services.Configure<IdentityOptions>(builder.Configuration.GetSection("IdentityOptions"));
+            builder.Services.AddOptions();
 
             builder.Services.AddMudServices();
         }

@@ -21,6 +21,10 @@
     <PackageReference Include="Duende.IdentityServer.Storage" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.1" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.0-preview5.24024.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -34,10 +38,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\LetsGame.Common\LetsGame.Common.csproj" />
     <ProjectReference Include="..\LetsGame.ServiceDefaults\LetsGame.ServiceDefaults.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Data\Migrations\" />
     <Folder Include="wwwroot\css\" />
     <Folder Include="wwwroot\js\" />
   </ItemGroup>

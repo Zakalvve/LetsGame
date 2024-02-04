@@ -3,18 +3,14 @@ using Identity.API.Data;
 using Identity.API.Extensions;
 using LetsGame.ServiceDefaults;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
-builder.Services.AddControllersWithViews();
-
-//// Add services to the container.
-//builder.Services.AddRazorComponents()
-//    .AddInteractiveServerComponents();
-
 builder.AddApplicationServices();
+builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
@@ -26,9 +22,10 @@ if (app.Environment.IsDevelopment())
     using (var scope = app.Services.CreateScope())
     {
         var context = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
-        context.Database.EnsureCreated();
+        await context.Database.EnsureCreatedAsync();
+        await context.Database.MigrateAsync();
     }
-} 
+}
 else
 { 
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
@@ -38,6 +35,13 @@ else
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+           Path.Combine(builder.Environment.ContentRootPath, "wwwroot/assets/images")),
+
+    RequestPath = "/images"
+});
 
 app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax });
 
@@ -48,8 +52,5 @@ app.UseAuthorization();
 app.UseAntiforgery();
 
 app.MapDefaultControllerRoute();
-
-//app.MapRazorComponents<App>()
-//    .AddInteractiveServerRenderMode();
 
 app.Run();
