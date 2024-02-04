@@ -1,4 +1,4 @@
-﻿namespace Identity.API.Models
+﻿namespace Identity.API.Models.View
 {
     public class RegisterViewModel
     {

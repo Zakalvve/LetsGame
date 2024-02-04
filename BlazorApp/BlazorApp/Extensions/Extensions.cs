@@ -64,6 +64,7 @@ namespace BlazorApp.Extensions
             });
 
             services.AddScoped<AuthenticationStateProvider, ServerAuthenticationStateProvider>();
+            services.AddScoped<LogOutService>();
             services.AddCascadingAuthenticationState();
         }
 

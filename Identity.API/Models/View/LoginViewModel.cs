@@ -1,4 +1,6 @@
-﻿namespace Identity.API.Models;
+﻿using Identity.API.Models.Input;
+
+namespace Identity.API.Models.View;
 
 public class LoginViewModel : LoginInputModel
 {
