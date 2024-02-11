@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LetsGame.ServiceDefaults", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.API", "Identity.API\Identity.API.csproj", "{A211C4E5-4D95-431D-8C3B-64BA424C5BDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LetsGame.Common", "LetsGame.Common\LetsGame.Common.csproj", "{506760F1-F7E9-4983-BA76-D5A3E92A8201}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LetsGame.Common", "LetsGame.Common\LetsGame.Common.csproj", "{506760F1-F7E9-4983-BA76-D5A3E92A8201}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
