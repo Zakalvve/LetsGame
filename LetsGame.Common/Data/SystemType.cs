@@ -1,5 +1,4 @@
-﻿
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace LetsGame.Common.Data;
 
@@ -10,7 +9,7 @@ public class SystemType : LetsGameBaseEntity
     [MaxLength(30)]
     public string Name { get; set; }
 
-    [MaxLength(30)]
+    [MaxLength(120)]
     public string? Description { get; set; }
     public virtual ICollection<SystemTypeValue> SystemTypeValues { get; } = new List<SystemTypeValue>();
 }
@@ -25,6 +24,6 @@ public class SystemTypeValue : LetsGameBaseEntity
     [MaxLength(30)]
     public string Name { get; set; }
 
-    [MaxLength(30)]
+    [MaxLength(120)]
     public string? Description { get; set; }
 }
