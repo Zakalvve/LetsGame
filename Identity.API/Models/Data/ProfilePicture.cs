@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Identity.API.Models.Data
 {
-    
+
     [PrimaryKey("Id")]
     [Table("ProfilePictures")]
     public class ProfilePicture : LetsGameBaseEntity

@@ -39,6 +39,9 @@ public class ApplicationContext : IdentityDbContext<ApplicationUser>
             b.Property(b => b.LastModified)
                 .HasDefaultValueSql("getdate()");
 
+            b.Property(b => b.PendingAccept)
+                .HasDefaultValue(true);
+
             b.HasOne(ship => ship.Requester)
                 .WithMany(user => user.RelationshipsAsRequester)
                 .HasForeignKey(ship => ship.RequesterId)

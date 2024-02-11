@@ -81,6 +81,20 @@ public class IdentitySeed(ILogger<IdentitySeed> logger, UserManager<ApplicationU
             }
         }
 
+        if (context.UserRelationships.Count() == 0)
+        {
+            var twoUsers = context.Users.Take(2).ToList();
+
+            UserRelationship relationship = new UserRelationship()
+            {
+                RequesterId = twoUsers[0].Id,
+                AddresseeId = twoUsers[1].Id
+            };
+
+            context.UserRelationships.Add(relationship);
+            await context.SaveChangesAsync();
+        }
+
         if (context.ProfilePictures.Count() == 0)
         {
 

@@ -7,7 +7,6 @@ using Identity.API.Models.View;
 using Identity.API.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using MudBlazor.Services;
 
 namespace Identity.API.Extensions
 {
@@ -47,8 +46,6 @@ namespace Identity.API.Extensions
 
             builder.Services.Configure<IdentityOptions>(builder.Configuration.GetSection("IdentityOptions"));
             builder.Services.AddOptions();
-
-            builder.Services.AddMudServices();
         }
 
         public static bool IsNativeClient(this AuthorizationRequest context)
