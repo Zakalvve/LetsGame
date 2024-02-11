@@ -1,44 +1,68 @@
 ﻿@inherits LayoutComponentBase
-@inject LogOutService LogOutService
 @inject NavigationManager Nav
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" class="btn-link" target="_blank">About</a>
-            <AuthorizeView>
-                <Authorized>
-                    <form method="post" action="user/logout" @formname="logout" @onsubmit="LogOutAsync">
-                        <AntiforgeryToken />
-                        <button type="submit" class="btn btn-link">Logout</button>
-                    </form>
-                </Authorized>
-                <NotAuthorized>
-                    <a aria-label="log-in" href="@Pages.LogIn.Url(Nav)" class="btn-link">Login</a>
-                </NotAuthorized>
-            </AuthorizeView>
-        </div>
-
-        <article class="content px-4">
+<RadzenLayout Style="grid-template-columns: auto 1fr auto; grid-template-areas: 'rz-header rz-header rz-header' 'rz-sidebar rz-body rz-right-sidebar'">
+    <RadzenHeader>
+        <RadzenRow JustifyContent="JustifyContent.SpaceBetween" AlignItems="AlignItems.Center" Gap="1rem">
+            <RadzenColumn>
+                <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" AlignItems="AlignItems.Center" Gap="0">
+                    <RadzenSidebarToggle Click="@(() => leftSidebarExpanded = !leftSidebarExpanded)" class="rz-mx-1" />
+                    <RadzenText Text="Lets Game" class="rz-color-white rz-mb-0"/>
+                </RadzenStack>
+            </RadzenColumn>
+            <RadzenColumn>
+                <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End"  AlignItems="AlignItems.Center" Gap="0">
+                    <AuthorizeView>
+                        <Authorized>
+                            <RadzenProfileMenu>
+                                <Template>
+                                    <RadzenImage Path="http://localhost:5226/images/default-profile-pictures/default-profile-pic-5.jpg" Style="width: 2.5rem" class="rz-border-radius-10" />
+                                </Template>
+                                <ChildContent>
+                                    <RadzenProfileMenuItem Text="Logout" Path="logout" class="rz-mx-4" aria-label="log-in" />
+                                </ChildContent>
+                            </RadzenProfileMenu>
+                        </Authorized>
+                        <NotAuthorized>
+                            <a href="@Url()" class="rz-button rz-button-md rz-variant-filled rz-light rz-shade-lighter rz-border-radius-6">
+                                <span class="rz-button-box">
+                                    Login
+                                </span>
+                            </a>
+                        </NotAuthorized>
+                    </AuthorizeView>
+                    <RadzenSidebarToggle Click="@(() => rightSidebarExpanded = !rightSidebarExpanded)" Icon="announcements" class="rz-mr-1" />
+                </RadzenStack>
+            </RadzenColumn>
+        </RadzenRow>
+    </RadzenHeader>
+    <NavMenu SidebarExpanded="@leftSidebarExpanded"/>
+    <RadzenBody>
+        <div class="rz-p-4">
             @Body
-        </article>
-    </main>
-</div>
+        </div>
+    </RadzenBody>
+    <RadzenSidebar @bind-Expanded="@rightSidebarExpanded" Style="width: 800px; grid-area: rz-right-sidebar" class="rz-background-color-primary rz-color-white" @bind-Responsive="isResponsive">
 
-<div id="blazor-error-ui">
-    An unhandled error has occurred.
-    <a href="" class="reload">Reload</a>
-    <a class="dismiss">🗙</a>
-</div>
+    </RadzenSidebar>
+</RadzenLayout>
 
 @code {
-    [CascadingParameter]
-    public HttpContext? HttpContext { get; set; }
 
-    private Task LogOutAsync()
-    => LogOutService.LogOutAsync(HttpContext!);
+    bool leftSidebarExpanded = false;
+    bool rightSidebarExpanded = false;
+    bool isResponsive = false;
+
+    string Url()
+        => $"/login?returnUrl={Uri.EscapeDataString(Nav.ToBaseRelativePath(Nav.Uri))}";
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            isResponsive = true;
+        }
+        base.OnAfterRender(firstRender);
+    }
 }

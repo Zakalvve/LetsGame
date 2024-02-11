@@ -2,11 +2,17 @@ using BlazorApp.Client.Pages;
 using BlazorApp.Components;
 using BlazorApp.Extensions;
 using BlazorApp.Services;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using LetsGame.ServiceDefaults;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
+
+builder.Services.AddRazorPages();
 
 builder.AddApplicationServices();
 
@@ -31,9 +37,20 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAntiforgery();
 
+app.MapGet("/logout", async (HttpContext context, LogOutService logout) =>
+{
+    await logout.LogOutAsync(context);
+});
+
+app.MapGet("/login", async (HttpContext context, string? returnUrl) =>
+{
+    var ReturnUrl = String.IsNullOrWhiteSpace(returnUrl) ? "/" : returnUrl; 
+    var url = new Uri(ReturnUrl, UriKind.RelativeOrAbsolute);
+    context.Response.Redirect(ReturnUrl);
+
+}).RequireAuthorization();
+
 app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode()
-    .AddInteractiveWebAssemblyRenderMode()
-    .AddAdditionalAssemblies(typeof(Counter).Assembly);
+    .AddInteractiveServerRenderMode();
 
 app.Run();

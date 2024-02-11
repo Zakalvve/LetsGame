@@ -23,8 +23,7 @@ namespace BlazorApp.Extensions
 
             // Add services to the container.
             builder.Services.AddRazorComponents()
-                .AddInteractiveServerComponents()
-                .AddInteractiveWebAssemblyComponents();
+                .AddInteractiveServerComponents();
 
             builder.Services.AddServerSideBlazor().AddCircuitOptions(option => { option.DetailedErrors = true; });
         }
@@ -66,6 +65,8 @@ namespace BlazorApp.Extensions
             services.AddScoped<AuthenticationStateProvider, ServerAuthenticationStateProvider>();
             services.AddScoped<LogOutService>();
             services.AddCascadingAuthenticationState();
+
+            services.AddHttpContextAccessor();
         }
 
         public static async Task<string?> GetBuyerIdAsync(this AuthenticationStateProvider authenticationStateProvider)
