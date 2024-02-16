@@ -1,7 +1,48 @@
-﻿@page "/"
+﻿@page "/dashboard"
 
-<PageTitle>Dashboard</PageTitle>
+<div class="h-100" style="@($"background:#fff@* {Colors.Grey.Lighten3} *@")">
+    <div class="h-100 pt-6 mb-6 ml-6 mr-6" style="overflow-y: auto; overflow-x:hidden;">
+        <MudGrid Justify="Justify.Center" Class="h-100 flex-grow-1">
+            <MudItem xs="4" Class="d-flex h-100">
+                <MudCard Class="d-flex flex-column flex-grow-1 shades transparent" Outlined="true">
+                    <MudCardHeader>
+                        <MudText Typo="Typo.h4"><b>Events</b></MudText>
+                        </MudCardHeader>
+                    <MudCardContent Class="flex-grow-1 pb-0" style="overflow-y: auto; overflow-x:hidden;">
+                        <DashboardEvents />
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+            <MudItem xs="4" Class="d-flex h-100">
+                <MudStack Class="h-100 width-full" Spacing="6">
+                    <MudCard Class="flex-grow-1 shades transparent" Outlined="true">
+                        <MudCardHeader>
+                            <MudText Typo="Typo.h4"><b>Friends</b></MudText>
+                        </MudCardHeader>
+                        <MudCardContent style="overflow-y: auto; overflow-x:hidden;">
 
-<h1>Hello, world!</h1>
+                        </MudCardContent>
+                    </MudCard>
+                    <MudCard Class="flex-grow-1 shades transparent" Outlined="true">
+                        <MudCardHeader>
+                            <MudText Typo="Typo.h4"><b>Feed</b></MudText>
+                        </MudCardHeader>
+                        <MudCardContent style="overflow-y: auto; overflow-x:hidden;">
 
-Welcome to your new app.
+                        </MudCardContent>
+                    </MudCard>
+                </MudStack>
+            </MudItem>
+            <MudItem xs="4" Class="d-flex h-100">
+                <MudCard Class="d-flex flex-column flex-grow-1 shades transparent" Outlined="true">
+                    <MudCardHeader>
+                        <MudText Typo="Typo.h4"><b>Games</b></MudText>
+                    </MudCardHeader>
+                    <MudCardContent Class="flex-grow-1 pb-0" style="overflow-y: auto; overflow-x:hidden;">
+                        <DashboardEvents />
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+        </MudGrid>
+    </div>
+</div>

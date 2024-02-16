@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
 using Microsoft.IdentityModel.JsonWebTokens;
+using MudBlazor.Services;
 
 namespace BlazorApp.Extensions
 {
@@ -67,6 +68,7 @@ namespace BlazorApp.Extensions
             services.AddCascadingAuthenticationState();
 
             services.AddHttpContextAccessor();
+            builder.Services.AddMudServices();
         }
 
         public static async Task<string?> GetBuyerIdAsync(this AuthenticationStateProvider authenticationStateProvider)

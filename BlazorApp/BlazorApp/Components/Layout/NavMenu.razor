@@ -1,18 +1,20 @@
 ﻿
-
-<RadzenSidebar Responsive="false" Style="@(SidebarExpanded ? "" : "width: max-content")">
-    <RadzenPanelMenu DisplayStyle="@(SidebarExpanded ? MenuItemDisplayStyle.IconAndText : MenuItemDisplayStyle.Icon)" ShowArrow="false">
-        <RadzenPanelMenuItem Text="Dashboard" Path="" Icon="dashboard" />
-        <AuthorizeView>
-            <Authorized>
-                <RadzenPanelMenuItem Text="Events" Path="events" Icon="event" />
-            </Authorized>
-        </AuthorizeView>
-        <RadzenPanelMenuItem Text="Counter" Path="counter" Icon="add" />
-    </RadzenPanelMenu>
-</RadzenSidebar>
+<MudNavMenu>
+    <MudNavLink Href="/dashboard" Icon="@Icons.Material.Filled.Dashboard">Dashboard</MudNavLink>
+    <MudNavLink Href="/events" Icon="@Icons.Material.Filled.Event">Events</MudNavLink>
+    <MudNavLink OnClick="UpdateRightSidebarState" Icon="@Icons.Material.Filled.People">Friends</MudNavLink>
+    <MudNavLink OnClick="UpdateRightSidebarState" Icon="@Icons.Material.Filled.Mail">Messages</MudNavLink>
+</MudNavMenu>
 
 @code {
     [Parameter]
-    public bool SidebarExpanded { get; set; }
+    public bool RightSidebarExpanded { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> RightSidebarExpandedChanged { get; set; }
+
+    private async Task UpdateRightSidebarState()
+    {
+        await RightSidebarExpandedChanged.InvokeAsync(!RightSidebarExpanded);
+    }
 }

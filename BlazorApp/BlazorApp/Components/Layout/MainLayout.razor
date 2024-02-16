@@ -1,68 +1,77 @@
 ﻿@inherits LayoutComponentBase
 @inject NavigationManager Nav
 
+<MudThemeProvider Theme="@letsGameTheme" />
+<MudDialogProvider />
+<MudSnackbarProvider />
 
-<RadzenLayout Style="grid-template-columns: auto 1fr auto; grid-template-areas: 'rz-header rz-header rz-header' 'rz-sidebar rz-body rz-right-sidebar'">
-    <RadzenHeader>
-        <RadzenRow JustifyContent="JustifyContent.SpaceBetween" AlignItems="AlignItems.Center" Gap="1rem">
-            <RadzenColumn>
-                <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" AlignItems="AlignItems.Center" Gap="0">
-                    <RadzenSidebarToggle Click="@(() => leftSidebarExpanded = !leftSidebarExpanded)" class="rz-mx-1" />
-                    <RadzenText Text="Lets Game" class="rz-color-white rz-mb-0"/>
-                </RadzenStack>
-            </RadzenColumn>
-            <RadzenColumn>
-                <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End"  AlignItems="AlignItems.Center" Gap="0">
-                    <AuthorizeView>
-                        <Authorized>
-                            <RadzenProfileMenu>
-                                <Template>
-                                    <RadzenImage Path="http://localhost:5226/images/default-profile-pictures/default-profile-pic-5.jpg" Style="width: 2.5rem" class="rz-border-radius-10" />
-                                </Template>
-                                <ChildContent>
-                                    <RadzenProfileMenuItem Text="Logout" Path="logout" class="rz-mx-4" aria-label="log-in" />
-                                </ChildContent>
-                            </RadzenProfileMenu>
-                        </Authorized>
-                        <NotAuthorized>
-                            <a href="@Url()" class="rz-button rz-button-md rz-variant-filled rz-light rz-shade-lighter rz-border-radius-6">
-                                <span class="rz-button-box">
-                                    Login
-                                </span>
-                            </a>
-                        </NotAuthorized>
-                    </AuthorizeView>
-                    <RadzenSidebarToggle Click="@(() => rightSidebarExpanded = !rightSidebarExpanded)" Icon="announcements" class="rz-mr-1" />
-                </RadzenStack>
-            </RadzenColumn>
-        </RadzenRow>
-    </RadzenHeader>
-    <NavMenu SidebarExpanded="@leftSidebarExpanded"/>
-    <RadzenBody>
-        <div class="rz-p-4">
-            @Body
-        </div>
-    </RadzenBody>
-    <RadzenSidebar @bind-Expanded="@rightSidebarExpanded" Style="width: 800px; grid-area: rz-right-sidebar" class="rz-background-color-primary rz-color-white" @bind-Responsive="isResponsive">
+<MudLayout Class="gradient-bg">
+    <MudAppBar Elevation="3" Fixed="true">
+        <MudText Typo="Typo.h4" Class="font-weight-bold">Lets Game</MudText>
+        <MudSpacer />
+        <MudStack Row="true" Spacing="1" Justify="Justify.FlexEnd" AlignItems="AlignItems.Center">
+            <MudIconButton OnClick="@((e) => rightSidebarExpanded = !rightSidebarExpanded)" Icon="@Icons.Material.Outlined.Notifications" Style="@($"color: {Colors.Shades.White};")" />
+            <AuthorizeView>
+                <Authorized>
+                    <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight">
+                        <ActivatorContent>
+                            <MudAvatar>
+                                <MudImage Src="http://localhost:5226/images/default-profile-pictures/default-profile-pic-6.jpg" />
+                            </MudAvatar>
+                        </ActivatorContent>
+                        <ChildContent>
+                            <MudPaper Width="300px" Elevation="0">
+                                <MudListSubheader>
+                                    <MudText>Username</MudText>
+                                </MudListSubheader>
+                                <MudDivider Style="border-color: #777"/>
+                                <MudMenuItem>
+                                    <MudText Typo="Typo.body1">Account</MudText>
+                                </MudMenuItem>
+                                <MudMenuItem>
+                                    <MudText Typo="Typo.body1">Settings</MudText>
+                                </MudMenuItem>
 
-    </RadzenSidebar>
-</RadzenLayout>
+                                <a href="/logout">
+                                    <MudMenuItem>
+                                        Sign Out
+                                    </MudMenuItem>
+                                </a>
+                            </MudPaper>
+                        </ChildContent>
+                    </MudMenu>
+                </Authorized>
+                <NotAuthorized>
+                    <MudButton Href="@Url()" Variant="Variant.Filled" Color="Color.Default" Class="mud-button-light">Login</MudButton>
+                </NotAuthorized>
+            </AuthorizeView>
+        </MudStack>
+    </MudAppBar>
+    <MudDrawer ClipMode="DrawerClipMode.Docked" @bind-Open="@leftSidebarExpanded" Elevation="1" Variant="@DrawerVariant.Mini" OpenMiniOnHover="true">
+        <NavMenu @bind-RightSidebarExpanded="rightSidebarExpanded"/>
+    </MudDrawer>
+    <MudDrawer ClipMode="DrawerClipMode.Docked" @bind-Open="@rightSidebarExpanded" Elevation="1" Anchor="Anchor.Right" Style="@($"background: var(--mud-palette-primary)")">
+        
+    </MudDrawer>
+    <MudMainContent Class="full-height">
+        @Body
+    </MudMainContent>
+</MudLayout>
 
 @code {
 
     bool leftSidebarExpanded = false;
     bool rightSidebarExpanded = false;
-    bool isResponsive = false;
+
+    MudTheme letsGameTheme = new MudTheme
+    {
+        LayoutProperties = new LayoutProperties
+        {
+            DrawerWidthRight = "1000px"
+        }
+    };
 
     string Url()
         => $"/login?returnUrl={Uri.EscapeDataString(Nav.ToBaseRelativePath(Nav.Uri))}";
 
-    protected override void OnAfterRender(bool firstRender)
-    {
-        if (firstRender)
-        {
-            isResponsive = true;
-        }
-        base.OnAfterRender(firstRender);
-    }
 }

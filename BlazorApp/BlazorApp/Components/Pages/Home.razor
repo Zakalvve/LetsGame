@@ -1,0 +1,24 @@
+﻿@using BlazorApp.Components.Layout;
+@layout WebPageLayout
+@inject NavigationManager Nav
+
+@page "/"
+
+<section class="hero-section">
+    <div class="text">
+        <h1>It's time to come together. It's time to blow off steam...</h1>
+        <p class="leading">Spend more time with friends and less time talking about getting together. An event scheduling app for organising meetups between busy people.</p>
+        <MudStack Row="true" Spacing="3">
+            <MudButton Href="" Variant="Variant.Filled" Color="Color.Secondary" Size="Size.Large" Class="button">Sign Up</MudButton>
+            <MudButton Href="@Url()" Variant="Variant.Filled" Color="Color.Tertiary" Size="Size.Large" Class="button">Login</MudButton>
+        </MudStack>
+    </div>
+    <div class="image">
+        <img src="/img/lets-game-home-hero.jpg"/>
+    </div>
+</section>
+
+@code {
+    string Url()
+    => $"/login?returnUrl={Uri.EscapeDataString("/dashboard")}";
+}

@@ -1,0 +1,23 @@
+﻿@inherits LayoutComponentBase
+@using BlazorApp.Components.Utility;
+
+<main class="gradient-bg">
+    <MudThemeProvider />
+    <MudDialogProvider />
+    <MudSnackbarProvider />
+
+    <MudContainer>
+        <header>
+            <MudText Typo="Typo.h2" Class="grey-text text-darken-2" Style="font-weight: 400; letter-spacing: 2px;">LetsGame</MudText>
+            <nav>
+
+            </nav>
+        </header>
+        @Body
+    </MudContainer>
+</main>
+
+
+@code {
+
+}
