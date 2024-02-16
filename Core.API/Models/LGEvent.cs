@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
+using System.ComponentModel.DataAnnotations.Schema;
+using LetsGame.Common.Data;
 namespace Core.API.Models;
 
-public class LGEvent
+
+[Table("LGEvents")]
+public class LGEvent : LetsGameBaseEntity
 {
-    [Key]
-    public int Id { get; set; }
     public string Name { get; set; }
 }

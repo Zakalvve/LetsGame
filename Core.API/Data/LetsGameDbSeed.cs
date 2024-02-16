@@ -7,6 +7,8 @@ public class LetsGameDbSeed(ILogger<LetsGameDbSeed> logger) : IDbSeeder<LetsGame
 {
     public async Task SeedAsync(LetsGameContext context)
     {
+        context.RemoveRange(context.LGEvents);
+
         List<LGEvent> events = new List<LGEvent>
         {
             new LGEvent
@@ -22,6 +24,8 @@ public class LetsGameDbSeed(ILogger<LetsGameDbSeed> logger) : IDbSeeder<LetsGame
         await context.AddRangeAsync(events);
         await context.SaveChangesAsync();
 
+
+        context.RemoveRange(context.LGPolls);
 
         List<LGPoll> polls = new List<LGPoll>
         {

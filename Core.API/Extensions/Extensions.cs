@@ -8,6 +8,6 @@ public static class Extensions
         builder.AddSqlServerDbContext<LetsGameContext>("CoreDB");
 
         // Seed the database with default values
-        //builder.Services.AddMigration<LetsGameContext, LetsGameDbSeed>();
+        builder.Services.AddMigration<LetsGameContext, LetsGameDbSeed>();
     }
 }

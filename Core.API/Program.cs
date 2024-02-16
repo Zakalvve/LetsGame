@@ -26,6 +26,7 @@ if (app.Environment.IsDevelopment())
     {
         var context = scope.ServiceProvider.GetRequiredService<LetsGameContext>();
         await context.Database.EnsureCreatedAsync();
+        await context.Database.MigrateAsync();
     }
 
     app.UseSwagger();
