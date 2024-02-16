@@ -1,0 +1,45 @@
+﻿@using LetsGame.Common.Entities.Events
+
+<MudGrid Class="h-100 hide-scroll rounded" Style="overflow-y: auto">
+    @foreach (var ev in Events)
+    {        
+        <MudItem xs="12" lg="6">
+            <MudCard>
+                <MudCardMedia Image="http://localhost:5226/images/default-profile-pictures/default-profile-pic-3.jpg" Height="200" />
+                <MudCardContent>
+                    <MudText Typo="Typo.h5">@ev.Title</MudText>
+                    <MudText Typo="Typo.overline">@ev.EventStartDate.ToString("F")</MudText>
+                    <MudText Typo="Typo.body2">@ev.Description.ClampLength(120, true)</MudText>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>        
+    }
+</MudGrid>
+
+@code {
+    const int eventCount = 10;
+    IQueryable<LGEventView> Events;
+
+    protected override Task OnInitializedAsync()
+    {
+        var events = new List<LGEventView>(eventCount);
+
+        for (int i = 0; i < eventCount; i++)
+        {
+
+            events.Add(new LGEventView
+            {
+                Title = "Test event",
+                Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                EventStartDate = DateTime.Now,
+                EventEndDate = DateTime.Now,
+                Location = "123 Dowberdown Close, Taramont, Katya, TM12 4PY",
+                Attendees = 10
+            });
+        }
+
+        Events = events.AsQueryable();
+
+        return base.OnInitializedAsync();
+    }
+}

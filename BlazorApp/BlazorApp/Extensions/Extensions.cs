@@ -66,7 +66,6 @@ namespace BlazorApp.Extensions
             services.AddScoped<AuthenticationStateProvider, ServerAuthenticationStateProvider>();
             services.AddScoped<LogOutService>();
             services.AddCascadingAuthenticationState();
-
             services.AddHttpContextAccessor();
             builder.Services.AddMudServices();
         }
@@ -83,6 +82,16 @@ namespace BlazorApp.Extensions
             var authState = await authenticationStateProvider.GetAuthenticationStateAsync();
             var user = authState.User;
             return user.FindFirst("name")?.Value;
+        }
+
+        public static string ClampLength(this string? s, int maxLength, bool appendEllipsis = false)
+        {
+            if (String.IsNullOrEmpty(s)) return appendEllipsis ? "..." : "";
+
+            maxLength = Math.Clamp(maxLength, 0, s.Length);
+
+            if (appendEllipsis) s += "...";
+            return s.Substring(0, maxLength) + (appendEllipsis ? "..." : "");
         }
     }
 }

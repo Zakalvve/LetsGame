@@ -1,0 +1,36 @@
+﻿
+@foreach (var letter in letters)
+{
+    <span style="color: @(colors[(int)Start%(colors.Count)])">@letter</span>
+
+    Start++;
+}
+
+@code {
+    [Parameter]
+    public string Text { get; set; }
+    [Parameter]
+    public int? Start { get; set; } = null;
+
+    public char[] letters;
+
+    List<string> colors = new ()
+    {
+        "#ef3550",
+        "#f48fb1",
+        "#7e57c2",
+        "#2196f3",
+        "#26c6da",
+        "#43a047"
+    };
+
+    protected override Task OnInitializedAsync()
+    {
+        letters = Text.ToCharArray();
+        if (Start == null)
+        {
+            Start = new Random().Next(0, letters.Length - 1);
+        }
+        return base.OnInitializedAsync();
+    }
+}

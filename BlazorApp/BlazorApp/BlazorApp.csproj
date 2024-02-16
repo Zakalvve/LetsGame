@@ -8,15 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\LetsGame.Common\LetsGame.Common.csproj" />
     <ProjectReference Include="..\..\LetsGame.ServiceDefaults\LetsGame.ServiceDefaults.csproj" />
-    <ProjectReference Include="..\BlazorApp.Client\BlazorApp.Client.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Radzen.Blazor" Version="4.24.6" />
+    <PackageReference Include="MudBlazor" Version="6.15.0" />
   </ItemGroup>
 
 </Project>
