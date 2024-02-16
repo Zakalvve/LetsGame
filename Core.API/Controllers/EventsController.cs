@@ -7,7 +7,7 @@ namespace Core.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class EventsController(LetsGameContext context, ILogger<WeatherForecastController> logger) : ControllerBase
+public class EventsController(LetsGameContext context, ILogger<EventsController> logger) : ControllerBase
 {
     [HttpGet]
     public async Task<ActionResult<ICollection<LGEvent>>> GetEvents()
