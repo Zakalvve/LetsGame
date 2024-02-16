@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LetsGame.Common.Entities.Events
 {
-    internal class LGEventView
+    public class LGEventView
     {
         public string Title { get; set; }
         public string Description { get; set; }
