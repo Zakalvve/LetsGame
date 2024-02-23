@@ -18,11 +18,11 @@ public class ClientTest : BaseClient
         return http.Result() ?? [];
     }
 
-    public async Task PostEvent()
+    public async Task PostEvent(LGEvent ev)
     {
-        var http = await MakeRequest<object>()
+        var http = await MakeRequest()
             .BuildRequest(HttpMethod.Post, "events", uriKind: UriKind.Relative)
-            .SendRequest()
+            .SendRequest(ev)
             .DeserializeJsonResponse()
             .Run();
 
@@ -48,6 +48,11 @@ public abstract class BaseClient : IDisposable
     public BaseClient(HttpClient client)
     {
         _client = client;
+    }
+
+    public HttpRequestBuilder<object> MakeRequest()
+    {
+        return MakeRequest<object>();
     }
 
     public HttpRequestBuilder<T> MakeRequest<T>() where T : class
