@@ -15,7 +15,7 @@
                 <Authorized>
                     <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight">
                         <ActivatorContent>
-                            <MudAvatar>
+                            <MudAvatar Elevation="6">
                                 <MudImage Src="http://localhost:5226/images/default-profile-pictures/default-profile-pic-6.jpg" />
                             </MudAvatar>
                         </ActivatorContent>
@@ -24,7 +24,7 @@
                                 <MudListSubheader>
                                     <MudText>Username</MudText>
                                 </MudListSubheader>
-                                <MudDivider Style="border-color: #777"/>
+                                <MudDivider Style="border-color: var(--mud-palette-lines-default);" />
                                 <MudMenuItem>
                                     <MudText Typo="Typo.body1">Account</MudText>
                                 </MudMenuItem>
@@ -50,7 +50,7 @@
     <MudDrawer ClipMode="DrawerClipMode.Docked" @bind-Open="@leftSidebarExpanded" Elevation="1" Variant="@DrawerVariant.Mini" OpenMiniOnHover="true">
         <NavMenu @bind-RightSidebarExpanded="rightSidebarExpanded"/>
     </MudDrawer>
-    <MudDrawer ClipMode="DrawerClipMode.Docked" @bind-Open="@rightSidebarExpanded" Elevation="1" Anchor="Anchor.Right" Style="@($"background: var(--mud-palette-primary)")">
+    <MudDrawer ClipMode="DrawerClipMode.Docked" @bind-Open="@rightSidebarExpanded" DisableOverlay="false" Variant="@DrawerVariant.Temporary" Elevation="1" Anchor="Anchor.Right" Style="@($"background: var(--mud-palette-primary)")">
         
     </MudDrawer>
     <MudMainContent Class="full-height">

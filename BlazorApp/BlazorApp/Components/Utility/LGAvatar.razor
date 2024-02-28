@@ -1,0 +1,47 @@
+﻿<MudTooltip Text="@User.DisplayName">
+    <MudAvatar Size="@Size" Style="@FinalStyle" Color="@FallbackColor">
+        @if (!String.IsNullOrWhiteSpace(User.ProfilePicture))
+        {
+            <MudImage Src="@User.ProfilePicture" />
+        }
+        else
+        {
+            @User.DisplayName.ToUpper().First().ToString()
+        }
+    </MudAvatar>
+</MudTooltip>
+
+@code {
+    [Parameter]
+    public LGUserView User { get; set; }
+
+    [Parameter]
+    public Size Size { get; set; } = Size.Medium;
+
+    [Parameter]
+    public string Style { get; set; } = "";
+
+    protected string FinalStyle =>
+    new CssBuilder()
+    .AddClass(Style)
+    .Build();
+
+    [Parameter]
+    public string Class { get; set; }
+
+    protected Color FallbackColor 
+    { 
+        get
+        {
+            try
+            {
+                Color color = (Color)User.ProfileColor;
+                return color;
+            } catch
+            {
+                return Color.Default;
+            }
+        } 
+    }
+}
+

@@ -1,0 +1,51 @@
+﻿@using LetsGame.Common.Data.Entities.Events;
+@using LetsGame.Common.Data.FluentValidators;
+
+<WizardForm Model="@model" Validator="@validator" Submit="@Submit">
+    <WizardPage Title="Basics" TModel="LGEventView" TValidator="LGEventViewValidator">
+        <MudTextField @bind-Value="model.Title"
+                      For="@(() => model.Title)"
+                      Immediate="true"
+                      Label="Title" />
+        <MudTextField @bind-Value="model.Description"
+                      For="@(() => model.Description)"
+                      Immediate="true"
+                      Label="Description" />
+    </WizardPage>
+    <WizardPage Title="When?" TModel="LGEventView" TValidator="LGEventViewValidator">
+        <MudDatePicker @bind-Date="model.StartDate"
+                       For="@(() => model.StartDate)"
+                       ImmediateText="true"
+                       Label="StartDate" />
+        @if (!endDateIsStartDate)
+        {
+            <MudDatePicker @bind-Date="model.EndDate"
+                           For="@(() => model.EndDate)"
+                           ImmediateText="true"
+                           Label="EndDate" />
+        }
+
+        <MudCheckBox @bind-Value="endDateIsStartDate"
+                     Label="End date is the same as start date"
+                     LabelPosition="LabelPosition.Start" />
+    </WizardPage>
+</WizardForm>
+
+@code {
+    LGEventView model = new LGEventView();
+    LGEventViewValidator validator = new LGEventViewValidator();
+
+    bool endDateIsStartDate = true;
+
+    private async Task Submit()
+    {
+        if (endDateIsStartDate) model.EndDate = model.StartDate;
+
+        var result = validator.Validate(model);
+
+        if (result.IsValid)
+        {
+            Console.WriteLine("Post valid model");
+        }
+    }
+}

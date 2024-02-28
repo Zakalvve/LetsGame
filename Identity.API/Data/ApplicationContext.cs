@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Identity.API.Models.Data;
-using LetsGame.Common.Data;
+using LetsGame.Common.Data.Entities.Core;
 
 namespace Identity.API.Data;
 

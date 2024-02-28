@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
-using LetsGame.Common.Data;
+using LetsGame.Common.Data.Entities.Core;
 
 namespace Core.API.Models
 {

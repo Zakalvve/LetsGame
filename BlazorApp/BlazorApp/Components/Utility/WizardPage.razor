@@ -1,0 +1,74 @@
+﻿@using LetsGame.Common.Data.FluentValidators;
+@typeparam TModel
+@typeparam TValidator where TValidator : BaseValidator<TModel>
+
+@if (PageNumber == Wizard.CurrentPage){
+    <MudCard>
+        <MudCardHeader>
+            <MudText Typo="Typo.h3">@Title</MudText>
+        </MudCardHeader>
+        <MudCardContent>
+            @ChildContent
+        </MudCardContent>
+        <MudCardActions>
+            @if (Position == PagePosition.Middle || Position == PagePosition.Last)
+            {
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" class="ml-auto" OnClick="@PreviousPage">Previous</MudButton>
+            }
+
+            @if (Position == PagePosition.First || Position == PagePosition.Middle)
+            {
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" class="ml-auto" OnClick="@NextPage">Next</MudButton>
+            }
+            else if (Position == PagePosition.Last)
+            {
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" class="ml-auto" OnClick="@Complete">Complete</MudButton>
+            }
+        </MudCardActions>
+    </MudCard>
+}
+
+@code {
+    [CascadingParameter]
+    public WizardForm<TModel, TValidator> Wizard { get; set; }
+
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    public int PageNumber { get; set; }
+
+    private PagePosition Position 
+    { 
+        get {
+            if (PageNumber == 0) return PagePosition.First;
+            else if (PageNumber == Wizard.LastPage) return PagePosition.Last;
+            return PagePosition.Middle;
+        } 
+    }
+
+    protected override Task OnInitializedAsync()
+    {
+        Wizard.AddPage(this);
+        PageNumber = Wizard.LastPage;
+
+        return base.OnInitializedAsync();
+    }
+
+    public async Task NextPage()
+    {
+        await Wizard.NextPage();
+    }
+
+    public void PreviousPage()
+    {
+        Wizard.PreviousPage();
+    }
+
+    public async Task Complete()
+    {
+        await Wizard.HandleSubmit();
+    }
+}

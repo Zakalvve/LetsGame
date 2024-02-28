@@ -1,11 +1,7 @@
 using BlazorApp.Components;
 using BlazorApp.Extensions;
 using BlazorApp.Services;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using LetsGame.ServiceDefaults;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components;
-using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 

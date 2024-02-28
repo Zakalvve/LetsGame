@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
-using LetsGame.Common.Data;
+using LetsGame.Common.Data.Entities.Core;
 
 namespace Identity.API.Models.Data
 {

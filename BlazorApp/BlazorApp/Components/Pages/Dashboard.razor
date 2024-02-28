@@ -1,48 +1,124 @@
 ﻿@page "/dashboard"
+@inject IDialogService DialogService
+@using LetsGame.Common.Data.Entities.Events
 
-<div class="h-100" style="@($"background:#fff@* {Colors.Grey.Lighten3} *@")">
-    <div class="h-100 pt-6 mb-6 ml-6 mr-6" style="overflow-y: auto; overflow-x:hidden;">
-        <MudGrid Justify="Justify.Center" Class="h-100 flex-grow-1">
-            <MudItem xs="4" Class="d-flex h-100">
-                <MudCard Class="d-flex flex-column flex-grow-1 shades transparent" Outlined="true">
-                    <MudCardHeader>
-                        <MudText Typo="Typo.h4"><b>Events</b></MudText>
-                        </MudCardHeader>
-                    <MudCardContent Class="flex-grow-1 pb-0" style="overflow-y: auto; overflow-x:hidden;">
-                        <DashboardEvents />
-                    </MudCardContent>
-                </MudCard>
-            </MudItem>
-            <MudItem xs="4" Class="d-flex h-100">
-                <MudStack Class="h-100 width-full" Spacing="6">
-                    <MudCard Class="flex-grow-1 shades transparent" Outlined="true">
-                        <MudCardHeader>
-                            <MudText Typo="Typo.h4"><b>Friends</b></MudText>
-                        </MudCardHeader>
-                        <MudCardContent style="overflow-y: auto; overflow-x:hidden;">
+<LGGrid Class="p-3" Cols="3" Rows="2" Gap="2">
+    <LGGridItem FromX="1" FromY="1" ToX="2" ToY="3" Overflow="true">
+        <LGScrollingCard Square="true" Outlined="true" ShowDivider="true">
+            <LGCardHeader>
+                <MudText Typo="Typo.h5"><b>Events</b></MudText>
+                <MudSpacer />
+                <MudIconButton OnClick="@HandleNewEvent" Icon="@Icons.Material.Outlined.Add" Size="Size.Large" Class="p-0 grey-text text-darken-3" />
+            </LGCardHeader>
+            <LGCardContent>
+                <DashboardEvents Events="@dashboardEvents" />
+            </LGCardContent>
+        </LGScrollingCard>
+    </LGGridItem>
+    <LGGridItem FromX="2" FromY="1" ToX="3" ToY="2" Overflow="true">
+        <LGScrollingCard Square="true" Outlined="true" ShowDivider="true">
+            <LGCardHeader>
+                <MudText Typo="Typo.h5"><b>Friends</b></MudText>
+                <MudSpacer />
+                <MudIconButton Icon="@Icons.Material.Outlined.Add" Size="Size.Large" Class="p-0 grey-text text-darken-3" />
+            </LGCardHeader>
+            <LGCardContent>
+                <DashboardFriendsList />
+            </LGCardContent>
+        </LGScrollingCard>
+    </LGGridItem>
+    <LGGridItem FromX="2" FromY="2" ToX="3" ToY="3" Overflow="true">
+        <LGScrollingCard Square="true" Outlined="true" ShowDivider="true">
+            <LGCardHeader>
+                <MudText Typo="Typo.h5"><b>Feed</b></MudText>
+                <MudSpacer />
+            </LGCardHeader>
+            <LGCardContent>
+                <DashboardFriendsList />
+            </LGCardContent>
+        </LGScrollingCard>
+    </LGGridItem>
+    <LGGridItem FromX="3" FromY="1" ToX="4" ToY="3" Overflow="true">
+        <LGScrollingCard Square="true" Outlined="true" ShowDivider="true">
+            <LGCardHeader>
+                <MudText Typo="Typo.h5"><b>Games</b></MudText>
+                <MudSpacer />
+                <MudIconButton Icon="@Icons.Material.Outlined.Add" Size="Size.Large" Class="p-0 grey-text text-darken-3" />
+            </LGCardHeader>
+            <LGCardContent>
+                <DashboardEvents Events="@dashboardEvents" />
+            </LGCardContent>
+        </LGScrollingCard>
+    </LGGridItem>
+</LGGrid>
 
-                        </MudCardContent>
-                    </MudCard>
-                    <MudCard Class="flex-grow-1 shades transparent" Outlined="true">
-                        <MudCardHeader>
-                            <MudText Typo="Typo.h4"><b>Feed</b></MudText>
-                        </MudCardHeader>
-                        <MudCardContent style="overflow-y: auto; overflow-x:hidden;">
+@code {
 
-                        </MudCardContent>
-                    </MudCard>
-                </MudStack>
-            </MudItem>
-            <MudItem xs="4" Class="d-flex h-100">
-                <MudCard Class="d-flex flex-column flex-grow-1 shades transparent" Outlined="true">
-                    <MudCardHeader>
-                        <MudText Typo="Typo.h4"><b>Games</b></MudText>
-                    </MudCardHeader>
-                    <MudCardContent Class="flex-grow-1 pb-0" style="overflow-y: auto; overflow-x:hidden;">
-                        <DashboardEvents />
-                    </MudCardContent>
-                </MudCard>
-            </MudItem>
-        </MudGrid>
-    </div>
-</div>
+    const int eventCount = 10;
+
+    IQueryable<LGEventView> dashboardEvents;
+
+    protected override Task OnInitializedAsync()
+    {
+        var events = new List<LGEventView>(eventCount);
+
+        for (int i = 0; i < eventCount; i++)
+        {
+
+            events.Add(new LGEventView
+            {
+                Title = "Test event",
+                Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now,
+                Location = "123 Dowberdown Close, Taramont, Katya, TM12 4PY",
+                Attendees = new List<LGUserView>
+                {
+                    new LGUserView
+                    {
+                        DisplayName = "David",
+                        ProfilePicture = "http://localhost:5226/images/default-profile-pictures/default-profile-pic-1.jpg",
+                        Bio = "I make full stack web applications.",
+                        ProfileColor = 1
+                    },
+                    new LGUserView
+                    {
+                        DisplayName = "Paul",
+                        Bio = "I made a van!",
+                        ProfileColor = 1
+                    },
+                    new LGUserView
+                    {
+                        DisplayName = "Carolyn",
+                        ProfilePicture = "http://localhost:5226/images/default-profile-pictures/default-profile-pic-3.jpg",
+                        Bio = "I'm writing a novel set in WW2.",
+                        ProfileColor = 1
+                    },
+                    new LGUserView
+                    {
+                        DisplayName = "Izi",
+                        Bio = "I am a journalist at radio 5 live.",
+                        ProfileColor = 3
+                    },
+                    new LGUserView
+                    {
+                        DisplayName = "Danielle",
+                        ProfilePicture = "http://localhost:5226/images/default-profile-pictures/default-profile-pic-5.jpg",
+                        Bio = "",
+                        ProfileColor = 1
+                    }
+                }
+            });
+        }
+
+        dashboardEvents = events.AsQueryable();
+
+        return base.OnInitializedAsync();
+    }
+
+    private void HandleNewEvent()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true, NoHeader = true };
+        DialogService.Show<AddNewEvent>("New Event", options);
+    }
+}

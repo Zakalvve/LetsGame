@@ -9,8 +9,7 @@ public class ClientTest : BaseClient
 
     public async Task<LGEvent[]> GetEvents()
     {
-        var http = await MakeRequest<LGEvent[]>()
-            .BuildRequest(HttpMethod.Get, "events", uriKind: UriKind.Relative)
+        var http = await BuildRequest<LGEvent[]>(HttpMethod.Get, "events", uriKind: UriKind.Relative)
             .SendRequest()
             .DeserializeJsonResponse()
             .Run();
@@ -18,10 +17,9 @@ public class ClientTest : BaseClient
         return http.Result() ?? [];
     }
 
-    public async Task PostEvent(LGEvent ev)
+    public async Task PostEvent(int ev)
     {
-        var http = await MakeRequest()
-            .BuildRequest(HttpMethod.Post, "events", uriKind: UriKind.Relative)
+        var http = await BuildRequest(HttpMethod.Post, "events", uriKind: UriKind.Relative)
             .SendRequest(ev)
             .DeserializeJsonResponse()
             .Run();
@@ -50,14 +48,31 @@ public abstract class BaseClient : IDisposable
         _client = client;
     }
 
-    public HttpRequestBuilder<object> MakeRequest()
+    /// <summary>
+    /// Make a request to an external API or service. Does not return any data.
+    /// </summary>
+    /// <param name="method">The http method to use for this request</param>
+    /// <param name="endpoint">The url of the API endpoint</param>
+    /// <param name="headers">Any additional headers that will be added to this request</param>
+    /// <param name="uriKind">The Uri kind to use for this request. If the Uri kind is relative, the given endpoint will be relative to the HttpClient's base address</param>
+    /// <returns>A http request builder to facilitate the construction of a http request pipeline.</returns>
+    public HttpRequestBuilder<object> BuildRequest(HttpMethod method, string endpoint, List<KeyValuePair<string, string>>? headers = null, UriKind uriKind = UriKind.Absolute)
     {
-        return MakeRequest<object>();
+        return BuildRequest<object>(method, endpoint, headers, uriKind);
     }
 
-    public HttpRequestBuilder<T> MakeRequest<T>() where T : class
+    /// <summary>
+    /// Make a request to an external API or service.
+    /// </summary>
+    /// <typeparam name="TResult">The type returned by API endpoint</typeparam>
+    /// <param name="method">The http method to use for this request</param>
+    /// <param name="endpoint">The url of the API endpoint</param>
+    /// <param name="headers">Any additional headers that will be added to this request</param>
+    /// <param name="uriKind">The Uri kind to use for this request. If the Uri kind is relative, the given endpoint will be relative to the HttpClient's base address</param>
+    /// <returns>A http request builder to facilitate the construction of a http request pipeline.</returns>
+    public HttpRequestBuilder<TResult> BuildRequest<TResult>(HttpMethod method, string endpoint, List<KeyValuePair<string, string>>? headers = null, UriKind uriKind = UriKind.Absolute)
     {
-        return new HttpRequestBuilder<T>(_client);
+        return new HttpRequestBuilder<TResult>(_client).BuildRequest(method, endpoint, headers, uriKind);
     }
 
     public void Dispose()
@@ -71,7 +86,7 @@ public abstract class BaseClient : IDisposable
     }
 }
 
-public class HttpRequestBuilder<T> : IDisposable where T : class
+public class HttpRequestBuilder<T> : IDisposable
 {
     private readonly HttpClient _client;
     private HttpRequestBuilderStatus _status;
@@ -83,7 +98,7 @@ public class HttpRequestBuilder<T> : IDisposable where T : class
     public HttpRequestBuilder(HttpClient client)
     {
         _client = client;
-        _result = null;
+        _result = default(T);
     }
 
     public HttpStatusCode ResponseStatus => _response == null ? HttpStatusCode.PreconditionFailed : _response.StatusCode;
@@ -107,7 +122,7 @@ public class HttpRequestBuilder<T> : IDisposable where T : class
         return this;
     }
 
-    public HttpRequestBuilder<T> SendRequest<TInput>(TInput? data = null) where TInput : class
+    public HttpRequestBuilder<T> SendRequest<TInput>(TInput data)
     {
         _queue.Enqueue(() => SendRequestAsync(data));
         return this;
@@ -122,15 +137,20 @@ public class HttpRequestBuilder<T> : IDisposable where T : class
         _queue.Enqueue(() => SendRequestAsync());
         return this;
     }
-    private async Task SendRequestAsync<TInput>(TInput? data = null) where TInput : class
+
+    private async Task SendRequestAsync<TInput>(TInput data)
     {
         if (_request == default) throw new InvalidOperationException("Cannot send request before request is built");
 
         string? jsonString = null;
 
-        if (data != null)
+        try
         {
             jsonString = JsonConvert.SerializeObject(data);
+        } catch
+        {
+            _status = HttpRequestBuilderStatus.SerializationError;
+            return;
         }
 
         await SendRequestAsync(jsonString);
@@ -195,7 +215,17 @@ public class HttpRequestBuilder<T> : IDisposable where T : class
         return this;
     }
 
-    public T? Result() => _result;
+    public T? Result()
+    {
+        object result = _result;
+
+        if (!(result is DBNull))
+        {
+            return (T)result;
+        }
+
+        return default(T);
+    }
 
     public void Dispose()
     {
@@ -212,6 +242,7 @@ public class HttpRequestBuilder<T> : IDisposable where T : class
     {
         ReponseSuccess,
         ResponseFailure,
+        SerializationError,
         DeserializationError
     }
 }

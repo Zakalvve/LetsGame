@@ -1,5 +1,8 @@
 ﻿@page "/events"
 @inject CoreApiClient EventsClient
+@inject ClientTest TestClient;
+@using LetsGame.Common.Data.Entities.Events;
+
 @attribute [StreamRendering]
 @attribute [Authorize]
 

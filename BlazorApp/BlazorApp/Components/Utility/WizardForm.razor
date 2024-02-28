@@ -1,0 +1,82 @@
+﻿@using LetsGame.Common.Data.FluentValidators;
+
+@typeparam TModel
+@typeparam TValidator where TValidator : BaseValidator<TModel>
+
+
+<MudForm @ref="@_form" Model="@Model" Validation="@Validator.ValidateValue" ValidationDelay="0">
+    <CascadingValue Value="this" IsFixed >
+        @ChildContent
+    </CascadingValue>
+</MudForm>
+
+@code {
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public TModel Model { get; set; }
+
+    [Parameter]
+    public TValidator Validator { get; set; }
+
+    [Parameter]
+    public int CurrentPage { get; set; } = 0;
+
+    [Parameter]
+    public Func<Task> Submit { get; set; }
+
+    private MudForm _form;
+
+    public int LastPage => _pages.Count - 1;
+
+    private readonly List<WizardPage<TModel, TValidator>> _pages = new List<WizardPage<TModel, TValidator>>();
+
+    public async Task HandleSubmit()
+    {
+        await _form.Validate();
+
+        if (_form.IsValid)
+        {
+            await Submit();
+        }
+    }
+
+    public void AddPage(WizardPage<TModel, TValidator> page)
+    {
+        if (!_pages.Contains(page))
+        {
+            _pages.Add(page);
+            StateHasChanged();
+        }
+    }
+
+    public void RemoveLine(WizardPage<TModel, TValidator> page)
+    {
+        if (_pages.Contains(page))
+        {
+            _pages.Remove(page);
+            StateHasChanged();
+        }
+    }
+
+    public async Task NextPage()
+    {
+        if (CurrentPage == _pages.Count - 1) return;
+
+        await _form.Validate();
+
+        if (_form.IsValid)
+        {
+            CurrentPage++;
+            StateHasChanged();
+        }
+    }
+
+    public void PreviousPage()
+    {
+        if (CurrentPage == 0) return;
+        CurrentPage--;
+        StateHasChanged();
+    }
+}

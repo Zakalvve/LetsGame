@@ -1,0 +1,34 @@
+﻿
+<div class="@ClassName" style="@Style">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter]
+    public string Class { get; set; } = "";
+
+    protected string ClassName =>
+        new CssBuilder("lg-grid")
+        .AddClass($"lg-grid-col-{Cols}")
+        .AddClass($"lg-grid-row-{Rows}")
+        .AddClass($"lg-grid-col-gap-{Gap}")
+        .AddClass($"lg-grid-row-gap-{Gap}")
+        .AddClass(Class)
+        .Build();
+
+
+    [Parameter]
+    public string Style { get; set; } = "";
+
+    [Parameter]
+    public int Gap { get; set; } = 3;
+
+    [Parameter]
+    public int Cols { get; set; } = 3;
+
+    [Parameter]
+    public int Rows { get; set; } = 3;
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+}

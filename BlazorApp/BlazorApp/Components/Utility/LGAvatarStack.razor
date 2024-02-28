@@ -1,0 +1,82 @@
+﻿
+
+<MudStack Class="@Class" Row="true" Spacing="1" Style="@($"{Style} flex-wrap: nowrap;")">
+    @for (int i = 0; i < Max; i++)
+    {
+        var user = Attendees[i];
+        bool hasProfile = !string.IsNullOrWhiteSpace(user.ProfilePicture);
+
+        int offset = 0;
+        if (i != 0 && Dense) offset = denseOffset;
+
+        <LGAvatar Size="@Size" Style="@($"margin-left: {offset}px; border: 2px solid white;")" User="@user" />
+
+    }
+    @if (Max <= Attendees.Count && Attendees.Count > 0)
+    {
+        int offset = 0;
+        if (Max != 0 && Dense) offset = denseOffset;
+
+        <MudAvatar Size="@Size" Style="@($"margin-left: {offset}px; border: 2px solid white")">
+            +@(Attendees.Count - Max)
+        </MudAvatar>
+    }
+</MudStack>
+
+@code {
+    [Parameter]
+    public int Max { get; set; } = 0;
+
+    [Parameter]
+    public List<LGUserView> Attendees { get; set; }
+
+    [Parameter]
+    public Size Size { get; set; } = Size.Medium;
+
+    [Parameter]
+    public bool Dense { get; set; } = false;
+
+    [Parameter]
+    public string Style { get; set; } = "";
+
+    [Parameter]
+    public string Class { get; set; } = "";
+
+    ColorCycler colors = new ColorCycler();
+
+    const int denseOffset = -15;
+
+    protected override Task OnInitializedAsync()
+    {
+        if (Attendees is null) Attendees = new List<LGUserView>(0);
+
+        if (Max > Attendees.Count) Max = Attendees.Count;
+
+        return base.OnInitializedAsync();
+    }
+
+    public class ColorCycler
+    {
+
+        private int _i = 0;
+
+        public ColorCycler() : this(new()
+        {
+            Color.Primary,
+            Color.Secondary,
+            Color.Tertiary
+        }) { }
+
+        public ColorCycler(List<Color> colors)
+        {
+            _colorSet = colors;
+        }
+
+        private List<Color> _colorSet;
+
+        public Color Next()
+        {
+            return _colorSet[(_i++) % _colorSet.Count]; ;
+        }
+    }
+}

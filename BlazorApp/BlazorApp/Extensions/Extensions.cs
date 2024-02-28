@@ -1,4 +1,5 @@
 ﻿using BlazorApp.Services;
+using LetsGame.Common.Clients;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -86,12 +87,18 @@ namespace BlazorApp.Extensions
 
         public static string ClampLength(this string? s, int maxLength, bool appendEllipsis = false)
         {
-            if (String.IsNullOrEmpty(s)) return appendEllipsis ? "..." : "";
+            if (String.IsNullOrEmpty(s) || s.Length < maxLength) return s;
 
             maxLength = Math.Clamp(maxLength, 0, s.Length);
 
             if (appendEllipsis) s += "...";
             return s.Substring(0, maxLength) + (appendEllipsis ? "..." : "");
+        }
+
+        public static void Restart(this System.Timers.Timer timer)
+        {
+            timer.Stop();
+            timer.Start();
         }
     }
 }

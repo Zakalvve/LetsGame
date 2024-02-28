@@ -1,4 +1,4 @@
-﻿using LetsGame.Common.Data;
+﻿using LetsGame.Common.Data.Entities.Core;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;

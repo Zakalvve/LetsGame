@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Policy;
-using LetsGame.Common.Data;
+using LetsGame.Common.Data.Entities.Core;
 using Microsoft.EntityFrameworkCore;
 
 namespace Identity.API.Models.Data;

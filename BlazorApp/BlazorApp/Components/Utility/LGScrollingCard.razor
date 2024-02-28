@@ -1,0 +1,38 @@
+﻿<MudCard Class="@ClassName" Square="@Square" Outlined="@Outlined">
+    <MudCardHeader>
+        @LGCardHeader
+    </MudCardHeader>
+    @if (ShowDivider)
+    {
+        <MudDivider Class="flex-grow-0" Style="border-color: var(--mud-palette-lines-default);" />
+    }
+
+    <MudCardContent Class="flex-grow-1 pb-0" style="overflow-y: auto; overflow-x:hidden;">
+        @LGCardContent
+    </MudCardContent>
+</MudCard>
+
+@code {
+    [Parameter]
+    public string Class { get; set; } = "";
+
+    protected string ClassName =>
+    new CssBuilder("d-flex flex-column h-100 w-100 shades transparent")
+    .AddClass(Class)
+    .Build();
+
+    [Parameter]
+    public RenderFragment LGCardHeader { get; set; }
+
+    [Parameter]
+    public RenderFragment LGCardContent { get; set; }
+
+    [Parameter]
+    public bool ShowDivider { get; set; } = false;
+
+    [Parameter]
+    public bool Square { get; set; } = false;
+
+    [Parameter]
+    public bool Outlined { get; set; } = false;
+}

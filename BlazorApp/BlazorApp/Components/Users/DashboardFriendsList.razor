@@ -1,0 +1,79 @@
+﻿
+<MudStack Spacing="0" Class="h-100 hide-scroll" Style="overflow-y: auto; ">
+    @for (int i = 0; i < Friends.Count; i++)
+    {
+        var friend = Friends[i];
+
+        <MudPaper Square="true" Elevation="0" Style="@($"padding: 15px; background: {Colors.Shades.Transparent}")">
+            <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
+                <MudStack Row="true" AlignItems="AlignItems.Center">
+                    <LGAvatar User="@friend" />
+                    <MudStack Spacing="0">
+                        <MudText Typo="Typo.caption">@friend.DisplayName</MudText>
+                        <MudText>@friend.Bio.ClampLength(50, true)</MudText>
+                    </MudStack>
+                </MudStack>
+                <MudMenu AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight">
+                    <ActivatorContent>
+                        <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Style="padding: 6px; margin-right: -6px;" />
+                    </ActivatorContent>
+                    <ChildContent>
+                        <MudMenuItem>Send Message</MudMenuItem>
+                        <MudMenuItem>Block</MudMenuItem>
+                    </ChildContent>
+                </MudMenu>
+            </MudStack>
+        </MudPaper>
+
+        if (i < Friends.Count - 1)  {
+            <MudDivider Class="flex-grow-0" Style="border-color: var(--mud-palette-lines-default);" />
+        }
+    }
+</MudStack>
+
+@code {
+    [Parameter]
+    public List<LGUserView> Friends { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        Friends = new List<LGUserView>
+        {
+            new LGUserView
+            {
+                DisplayName = "David",
+                ProfilePicture = "http://localhost:5226/images/default-profile-pictures/default-profile-pic-1.jpg",
+                Bio = "I make full stack web applications.",
+                ProfileColor = 1
+            },
+            new LGUserView
+            {
+                DisplayName = "Paul",
+                Bio = "I made a van!",
+                ProfileColor = 1
+            },
+            new LGUserView
+            {
+                DisplayName = "Carolyn",
+                ProfilePicture = "http://localhost:5226/images/default-profile-pictures/default-profile-pic-3.jpg",
+                Bio = "I'm writing a novel set in WW2.",
+                ProfileColor = 1
+            },
+            new LGUserView
+            {
+                DisplayName = "Izi",
+                Bio = "I am a journalist at radio 5 live.",
+                ProfileColor = 3
+            },
+            new LGUserView
+            {
+                DisplayName = "Danielle",
+                ProfilePicture = "http://localhost:5226/images/default-profile-pictures/default-profile-pic-5.jpg",
+                Bio = "",
+                ProfileColor = 1
+            }
+        };
+
+        return base.OnInitializedAsync();
+    }
+}

@@ -1,0 +1,41 @@
+﻿<div class="@ClassName" style="@FinalStyle">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter]
+    public string Class { get; set; } = "";
+
+    protected string ClassName =>
+    new CssBuilder("h-100")
+    .AddClass("w-100")
+    .AddClass(Class)
+    .Build();
+
+    [Parameter]
+    public string Style { get; set; } = "";
+
+    protected string FinalStyle =>
+    new CssBuilder($"grid-area: {FromY} / {FromX} / {ToY} / {ToX};")
+    .AddClass("overflow-y: scroll;", Overflow)
+    .AddClass(Style)
+    .Build();
+
+    [Parameter]
+    public bool Overflow { get; set; } = false;
+
+    [Parameter]
+    public int FromX { get; set; } = 1;
+
+    [Parameter]
+    public int FromY { get; set; } = 1;
+
+    [Parameter]
+    public int ToX { get; set; } = 2;
+
+    [Parameter]
+    public int ToY { get; set; } = 2;
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+}

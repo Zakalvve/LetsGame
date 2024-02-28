@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace LetsGame.Common.Data;
+namespace LetsGame.Common.Data.Entities.Core;
 
 public class LetsGameBaseEntity : IIdable<int>
 {
